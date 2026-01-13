@@ -1,186 +1,147 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Market Chat</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Community | Private Group</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ====== ОСНОВА ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', Arial, sans-serif;
+}
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      color: #e5e7eb;
-      overflow-x: hidden;
-    }
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        120deg,
+        #0f0f0f,
+        #1c1c1c,
+        #2b2b2b,
+        #111111,
+        #f2f2f2
+    );
+    background-size: 400% 400%;
+    animation: bgMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
 
-    a { text-decoration: none; color: inherit; }
+/* ====== АНИМАЦИЯ ФОНА ====== */
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    /* ===== subtle animated grid ===== */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,255,153,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,153,0.06) 1px, transparent 1px);
-      background-size: 70px 70px;
-      animation: moveGrid 30s linear infinite;
-      z-index: -1;
-    }
+/* ====== КАРТОЧКА ====== */
+.container {
+    width: 90%;
+    max-width: 420px;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 22px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+}
 
-    @keyframes moveGrid {
-      from { transform: translateY(0); }
-      to { transform: translateY(70px); }
-    }
+/* ====== АВАТАР ====== */
+.avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    border: 3px solid #ffffff;
+    background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRX-COwFcMhvMtm2x6b59HcYTk91ycKzEF0Fk30Cxyk7HmfYr5G") center/cover no-repeat;
+}
 
-    /* ===== hero ===== */
-    header {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
+/* ====== ЗАГОЛОВОК ====== */
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
 
-    header h1 {
-      font-size: clamp(38px, 6vw, 64px);
-      font-weight: 800;
-      background: linear-gradient(90deg, #00ff99, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glow 3s infinite alternate;
-    }
+.subtitle {
+    font-size: 14px;
+    color: #cfcfcf;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px rgba(0,255,153,0.35); }
-      to { text-shadow: 0 0 22px rgba(56,189,248,0.65); }
-    }
+/* ====== БЛОК ОПИСАНИЯ ====== */
+.description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #e5e5e5;
+    margin-bottom: 30px;
+}
 
-    header p {
-      max-width: 620px;
-      margin: 25px auto 40px;
-      font-size: 18px;
-      opacity: 0.9;
-    }
+/* ====== КНОПКА ====== */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ffffff, #bdbdbd);
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 16px 38px;
-      border-radius: 40px;
-      font-weight: 600;
-      background: linear-gradient(90deg, #00ff99, #38bdf8);
-      color: #020617;
-      box-shadow: 0 0 28px rgba(0,255,153,0.35);
-      transition: 0.25s;
-    }
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,255,255,0.25);
+}
 
-    .btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 0 45px rgba(56,189,248,0.6);
-    }
-
-    section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 100px 20px;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 34px;
-      margin-bottom: 60px;
-      font-weight: 700;
-    }
-
-    /* ===== cards ===== */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
-    }
-
-    .card {
-      background: rgba(15,23,42,0.75);
-      border: 1px solid rgba(0,255,153,0.18);
-      backdrop-filter: blur(10px);
-      padding: 32px;
-      border-radius: 20px;
-      transition: 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent, rgba(0,255,153,0.18), transparent);
-      transform: translateX(-100%);
-      transition: 0.6s;
-    }
-
-    .card:hover::before { transform: translateX(100%); }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 0 38px rgba(0,255,153,0.22);
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      opacity: 0.65;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-  </style>
+/* ====== НИЗ ====== */
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #9b9b9b;
+}
+</style>
 </head>
+
 <body>
 
-<div class="grid-bg"></div>
+<div class="container">
 
-<header>
-  <div>
-    <h1>Market Chat</h1>
-    <p>
-      Живой трейдерский чат. Обсуждаем рынок, идеи и сценарии.
-      Без сигналов, без обещаний, без шума.
-    </p>
-    <a href="https://t.me/+QoG0H7aErJFjY2Fi" class="btn">Войти в Telegram</a>
-  </div>
-</header>
+    <!-- Аватар -->
+    <div class="avatar"></div>
 
-<section>
-  <h2>Что происходит в чате</h2>
-  <div class="cards">
-    <div class="card">📊 Обсуждаем рынок и ключевые уровни</div>
-    <div class="card">🧠 Делимся мыслями и сценариями</div>
-    <div class="card">💬 Спокойное общение без токсичности</div>
-    <div class="card">📰 Реакция на новости рынка</div>
-  </div>
-</section>
+    <!-- Заголовок -->
+    <h1>Private Trading Group</h1>
+    <div class="subtitle">
+        Сообщество трейдеров • Поддержка • Дисциплина
+    </div>
 
-<section>
-  <h2>Для кого этот чат</h2>
-  <div class="cards">
-    <div class="card">Новички, которые хотят понять рынок</div>
-    <div class="card">Практикующие трейдеры</div>
-    <div class="card">Все, кто следит за ценой и логикой движения</div>
-  </div>
-</section>
+    <!-- Описание -->
+    <div class="description">
+        🔹 Группа для <b>новичков</b> и <b>опытных трейдеров</b><br>
+        🔹 Помощь, разборы сделок и ответы на вопросы<br>
+        🔹 Общение, дисциплина и психологическая поддержка<br>
+        🔹 Без токсичности — только рост и развитие
+    </div>
 
-<section style="text-align:center;">
-  <h2>Хочешь присоединиться?</h2>
-  <p style="margin: 25px 0 40px;">Зайди в чат и будь в рынке вместе с нами</p>
-  <a href="https://t.me/+QoG0H7aErJFjY2Fi" class="btn">Перейти в Telegram</a>
-</section>
+    <!-- Кнопка -->
+    <a class="btn" href="https://t.me/+QoG0H7aErJFjY2Fi" target="_blank">
+    🚀 Перейти в приватную группу
+    </a>
 
-<footer>
-  © 2026 • Market Chat • Не финансовая рекомендация
-</footer>
+    <div class="footer">
+        Trading • Discipline • Support
+    </div>
+
+</div>
 
 </body>
 </html>
